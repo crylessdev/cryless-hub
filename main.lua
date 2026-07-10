@@ -19,19 +19,16 @@ local MainTab = Window:MakeTab({
     Icon = "rbxassetid://4483345998"
 })
 
+-- Мобільний автоклікер (активує предмет у руках)
 local function startAutoClicker()
-    local VirtualInputManager = game:GetService("VirtualInputManager")
     task.spawn(function()
         while _G.AutoClick do
-            local camera = workspace.CurrentCamera
-            if camera then
-                local viewportSize = camera.ViewportSize
-                local x = viewportSize.X / 2
-                local y = viewportSize.Y / 2
-
-                VirtualInputManager:SendMouseButtonEvent(x, y, 0, true, game, 1)
-                task.wait(0.01)
-                VirtualInputManager:SendMouseButtonEvent(x, y, 0, false, game, 1)
+            if LocalPlayer.Character then
+                -- Шукаємо предмет, який зараз у руках у персонажа
+                local tool = LocalPlayer.Character:FindFirstChildOfClass("Tool")
+                if tool then
+                    tool:Activate()
+                end
             end
             task.wait(ClickDelay)
         end
@@ -39,7 +36,7 @@ local function startAutoClicker()
 end
 
 MainTab:AddToggle({
-    Name = "Auto-Clicker (Center Screen)",
+    Name = "Auto-Clicker (Hold Tool)",
     Default = false,
     Callback = function(Value)
         _G.AutoClick = Value
@@ -47,7 +44,7 @@ MainTab:AddToggle({
             startAutoClicker()
             OrionLib:MakeNotification({
                 Name = "Cryless Hub",
-                Content = "Auto-Clicker Enabled",
+                Content = "Auto-Clicker Enabled (Equip a Tool)",
                 Image = "rbxassetid://4483345998",
                 Time = 2
             })
