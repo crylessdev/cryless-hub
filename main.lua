@@ -7,24 +7,20 @@ local Window = OrionLib:MakeWindow({
     IntroText = "Loading Cryless Hub..."
 })
 
--- VARIABLES
 _G.AutoClick = false
 local ClickDelay = 0.1
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
--- TAB 1: MAIN
 local MainTab = Window:MakeTab({
     Name = "Main",
     Icon = "rbxassetid://4483345998"
 })
 
--- Мобільний автоклікер (активує предмет у руках)
 local function startAutoClicker()
     task.spawn(function()
         while _G.AutoClick do
             if LocalPlayer.Character then
-                -- Шукаємо предмет, який зараз у руках у персонажа
                 local tool = LocalPlayer.Character:FindFirstChildOfClass("Tool")
                 if tool then
                     tool:Activate()
@@ -59,13 +55,11 @@ MainTab:AddToggle({
     end    
 })
 
--- TAB 2: PLAYER
 local PlayerTab = Window:MakeTab({
     Name = "Player",
     Icon = "rbxassetid://4483345998"
 })
 
--- WalkSpeed Slider
 PlayerTab:AddSlider({
     Name = "WalkSpeed",
     Min = 16,
@@ -81,7 +75,6 @@ PlayerTab:AddSlider({
     end    
 })
 
--- JumpPower Slider
 PlayerTab:AddSlider({
     Name = "JumpPower",
     Min = 50,
